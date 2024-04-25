@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        background-image:url("https://cdn.pixabay.com/photo/2021/10/07/15/23/real-estate-6688945_1280.jpg");
+        background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+    }
+ h2{
+text-align:center;
+}
+    .container {
+        width: 350px;
+        background-color: #f4f4f4;
+        font-weight: bold;
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-image: url("https://cdn.pixabay.com/photo/2018/05/08/09/09/money-3382555_1280.jpg");
+  background-position: center;
+  background-size: cover;
+  
+}
+
+    input[type="number"], input[type="submit"], select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #bbb4b4;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    #emi-result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>EMI Calculator</h2>
+    <form id="emi-form">
+        <label for="loan-amount">Loan Amount (Rs): </label>
+        <input type="number" id="loan-amount" placeholder="enter amount" required>
+        <label for="down-payment">Down Payment (Rs):</label>
+        <input type="number" id="down-payment" placeholder="enter amount" required>
+        <label for="interest-rate">Interest Rate (%):</label>
+        <select id="interest-rate">
+            <option value="">--select--</option>
+            <option value="8.35">Union Bank of India  - 8.35%</option>
+            <option value="7.5">Bank B - 7.5%</option>
+            <option value="8.50">State Bank of India  - 8.50%</option>
+            <option value="8.70">HDFC Home Loans  - 8.70%</option>
+            <option value="8.75">Axis Bank  - 8.75%</option>
+            <option value="8.40">Canara Bank - 8.40%</option>
+            <option value="8.75">IDFC First Bank  - 8.75%</option>
+            <option value="8.45">HSBC Bank  - 8.45%</option>
+            <option value="8.60">Standard Chartered Bank   - 8.60%</option>
+            <option value="9.40">Yes Bank   - 9.40%</option>
+            <option value="10.15">Bank of Baroda  - 10.15%</option>
+        </select>
+        <label for="loan-tenure">Loan Tenure (Months):</label>
+        <input type="number" id="loan-tenure" required>
+        <input type="submit" value="Calculate EMI">
+    </form>
+    <div id="emi-result"></div>
+</div>
+
+<script>
+    document.getElementById("emi-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let loanAmount = parseFloat(document.getElementById("loan-amount").value);
+        let downPayment = parseFloat(document.getElementById("down-payment").value);
+        let interestRate = parseFloat(document.getElementById("interest-rate").value) / 100 / 12;
+        let loanTenure = parseInt(document.getElementById("loan-tenure").value);
+
+        let emi = calculateEMI(loanAmount - downPayment, interestRate, loanTenure);
+        document.getElementById("emi-result").innerText = `EMI: ? ${emi.toFixed(2)}`;
+    });
+
+    function calculateEMI(loanAmount, interestRate, loanTenure) {
+        let emi = loanAmount * interestRate * Math.pow(1 + interestRate, loanTenure) / (Math.pow(1 + interestRate, loanTenure) - 1);
+        return emi;
+    }
+</script>
+</body>
+</html>
